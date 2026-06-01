@@ -24,8 +24,8 @@ fn build_route(
   format!(
     "http{}://{}/api/{}/{route}",
     if *secure { "s" } else { "" },
+    domain.as_ref(),
     version.as_ref().map(String::as_str).unwrap_or_else(|| "v4"),
-    domain.as_ref()
   )
 }
 
