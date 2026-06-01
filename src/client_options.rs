@@ -38,6 +38,8 @@ pub struct ClientOptionsInternal {
 }
 
 impl<Domain: Into<Cow<'static, str>>> ClientOptions<Domain> {
+  /// Create new [`ClientOptions`] with the given domain and secure flag.
+  /// Other options will be set to reasonable defaults.
   pub fn new(domain: Domain, secure: bool) -> Self {
     Self {
       domain,
@@ -46,6 +48,8 @@ impl<Domain: Into<Cow<'static, str>>> ClientOptions<Domain> {
     }
   }
 
+  /// Create new [`ClientOptions`] with the given domain, secure flag, and API version.
+  /// Other options will be set to reasonable defaults.
   pub fn new_with_version(domain: Domain, secure: bool, version: String) -> Self {
     Self {
       domain,
