@@ -1,8 +1,6 @@
 use crate::{ClientOptions, client_options::ClientOptionsInternal};
 use http::{
-  HeaderMap,
-  HeaderValue,
-  Method,
+  HeaderMap, HeaderValue, Method,
   header::{AUTHORIZATION, InvalidHeaderValue, USER_AGENT},
 };
 use lemmy_api_common::{error::LemmyErrorType, media::UploadImageResponse};
@@ -15,11 +13,16 @@ pub type LemmyResult<R> = Result<R, LemmyErrorType>;
 
 fn build_route(
   route: &str,
-  ClientOptionsInternal { domain, secure }: &ClientOptionsInternal,
+  ClientOptionsInternal {
+    domain,
+    secure,
+    version,
+  }: &ClientOptionsInternal,
 ) -> String {
   format!(
-    "http{}://{}/api/v4/{route}",
+    "http{}://{}/api/{}/{route}",
     if *secure { "s" } else { "" },
+    version.unwrap_or_else(|| "v4".to_string()),
     domain.as_ref()
   )
 }

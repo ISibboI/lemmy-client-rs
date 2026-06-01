@@ -23,6 +23,8 @@ pub struct ClientOptions<Domain: Into<Cow<'static, str>>> {
   pub domain: Domain,
   /// If true, use HTTPS. If false, use HTTP
   pub secure: bool,
+  /// The version of the API to use. If `None`, the client will use the latest version of the API.
+  pub version: Option<String>,
 }
 
 /// Internal options used by the Lemmy client implementation.
@@ -32,16 +34,42 @@ pub struct ClientOptions<Domain: Into<Cow<'static, str>>> {
 pub struct ClientOptionsInternal {
   pub domain: Cow<'static, str>,
   pub secure: bool,
+  pub version: Option<String>,
+}
+
+impl<Domain: Into<Cow<'static, str>>> ClientOptions<Domain> {
+  pub fn new(domain: Domain, secure: bool) -> Self {
+    Self {
+      domain,
+      secure,
+      version: None,
+    }
+  }
+
+  pub fn new_with_version(domain: Domain, secure: bool, version: String) -> Self {
+    Self {
+      domain,
+      secure,
+      version: Some(version),
+    }
+  }
 }
 
 impl<Domain> From<ClientOptions<Domain>> for ClientOptionsInternal
 where
   Domain: Into<Cow<'static, str>>,
 {
-  fn from(ClientOptions { domain, secure }: ClientOptions<Domain>) -> Self {
+  fn from(
+    ClientOptions {
+      domain,
+      secure,
+      version,
+    }: ClientOptions<Domain>,
+  ) -> Self {
     Self {
       secure,
       domain: domain.into(),
+      version,
     }
   }
 }
