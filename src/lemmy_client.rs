@@ -1,6 +1,8 @@
 use crate::{ClientOptions, client_options::ClientOptionsInternal};
 use http::{
-  HeaderMap, HeaderValue, Method,
+  HeaderMap,
+  HeaderValue,
+  Method,
   header::{AUTHORIZATION, InvalidHeaderValue, USER_AGENT},
 };
 use lemmy_api_common::{error::LemmyErrorType, media::UploadImageResponse};
